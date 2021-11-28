@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+{% block title %}Listings Nearby{% endblock %}
+{% block head %}
+<script type="text/javascript">
+    function disabler(){
+        document.getElementById("submitter").disabled = true;
+    }
+
+    function showLocation(position) {
+       var latitude = position.coords.latitude;
+       var longitude = position.coords.longitude;
+       let inputlat = document.getElementById("lat");
+       let inputlong = document.getElementById("long");
+       inputlat.value = latitude;
+       inputlong.value = longitude;
+        document.getElementById("submitter").disabled = false;
+    }
+    function errorHandler(err) {
+       if(err.code == 1) {
+          alert("Error: You need to allow location access");
+       } else if( err.code == 2) {
+          alert("Error: Position is unavailable!");
+       }
+    }
+    function getLocation(){
+       if(navigator.geolocation){
+          // timeout at 60000 milliseconds (60 seconds)
+          var options = {timeout:60000};
+          navigator.geolocation.getCurrentPosition
+          (showLocation, errorHandler, options);
+       } else{
+          alert("Sorry, browser does not support geolocation!");
+       }
+    }
+ </script>
+ {% endblock %}
+{% block content %}
+<div style="width: 100%; height: 20%; display: grid; margin-top: 10%;">
+    <button class="btn-primary btn-lg btn" style="margin: auto; font-size: 3rem; border-radius: 3rem;" onclick="getLocation();">GET LOCATION NOW</button>
+</div>
+
+    <form action="/listings/" method="POST" class="" style="width: 420px;
+                                                                padding: 15px;
+                                                                margin-left:auto;
+                                                                margin-right: auto;
+                                                                margin-top: 10%;
+                                                                display: grid;">
+                                        
+        <input id="lat" type="hidden" name="latitude" required>
+        <input id="long" type="hidden" name="longitude" required>
+        <input id="submitter" style="position: relative; text-align: middle; font-size: 3rem; border-radius: 3rem;" class="btn-primary btn-lg btn" type="submit" value="Check Nearby" disabled/>
+    </form>
+
+ {% endblock %}

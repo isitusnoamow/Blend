@@ -1,0 +1,29 @@
+{% extends "main.html" %}
+{% block title %}Listings Nearby{% endblock %}
+{% block head %}
+{% endblock %}
+{% block content %}
+    <h1 style="margin-top: 10%;">Listings</h1>
+    {% for listing in queryitems %}
+        <div class="my-5 p-4 bg-body rounded shadow-sm">
+
+          <div class="d-flex text-muted pt-3">
+            <img class="bd-placeholder-img flex-shrink-0 me-2 rounded" width="260" height="180" src="{{ listing['image'] }}">
+          </img>
+            <p class="pb-3 mb-0 small lh-sm border-bottom">
+              <strong style="font-size: 33px" class="d-block text-gray-dark">{{ listing["item"] }}</strong>
+              <text style="font-size: 13px"class="d-block text-gray-dark">{{ listing["user"] }}</text>
+              <br>
+              <strong style="font-size: 24px; color: #FE1B7E;" class="d-block text-gray-dark">HKD${{ listing["price"] }}</strong>
+              <text style="font-size: 13px" class="d-block text-gray-dark">{{ listing["lendtime"] }} hours</text>
+              <a href="/listing/{{ listing['_id'] }}"><button class="btn btn-lg btn-primary btn-block">Borrow</button></a>
+            </p>
+            
+          </div>
+        </div>
+  
+    {% endfor %}
+
+
+
+ {% endblock %}

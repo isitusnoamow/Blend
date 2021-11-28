@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+{% endblock %}
+
+{% block content %}
+
+<div style="width: 400px; margin-left: auto; margin-right: auto;">
+    <h1 class="h3 mb-3 font-weight-normal" style="margin-top: 30%;">Login:</h1>
+    <br>
+    <br>
+    <form class="form-signin" action="/" method="POST">
+        <label for="username" class="sr-only">Username*<//label></label>
+        <input type="text" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+        <label for="phone" class="sr-only">Phone Number*<//label></label>
+        <input type="text" name="phone" class="form-control" placeholder="+852 XXXX XXXX" required="" autofocus="">
+        <label for="password" class="sr-only">Password*</label>
+        <input type="password" name="password" class="form-control" placeholder="Password" required="">
+        <br>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" id="submitter" type="submit">Login</button>
+  </form>
+</div>
+
+{% endblock %}

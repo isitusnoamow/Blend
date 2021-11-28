@@ -1,0 +1,62 @@
+{% extends "main.html" %}
+{% block title %}Lend an item{% endblock %}
+{% block head %}
+<script type="text/javascript">
+    function showLocation(position) {
+       var latitude = position.coords.latitude;
+       var longitude = position.coords.longitude;
+       let inputlat = document.getElementById("lat");
+       let inputlong = document.getElementById("long");
+       inputlat.value = latitude;
+       inputlong.value = longitude;
+        document.getElementById("submitter").disabled = false;
+    }
+    function errorHandler(err) {
+       if(err.code == 1) {
+          alert("Error: You need to allow location access");
+       } else if( err.code == 2) {
+          alert("Error: Position is unavailable!");
+       }
+    }
+    function getLocation(){
+       if(navigator.geolocation){
+          // timeout at 60000 milliseconds (60 seconds)
+          var options = {timeout:60000};
+          navigator.geolocation.getCurrentPosition
+          (showLocation, errorHandler, options);
+       } else{
+          alert("Sorry, browser does not support geolocation!");
+       }
+    }
+ </script>
+{% endblock %}
+
+{% block content %}
+
+<div style="width: 400px; margin-left: auto; margin-right: auto;">
+    <h1 class="h3 mb-3 font-weight-normal" style="margin-top: 30%;">Lend an item:</h1>
+    <br>
+    <button class="btn btn-lg btn-primary btn-block" onclick="getLocation();">Click for location</button>
+    <br>
+    <br>
+    <form class="form-signin" action="/lend/success" method="POST">
+        
+        <label for="item" class="sr-only">Item name*<//label></label>
+        <input type="text" name="item" class="form-control" placeholder="Item name" required="" autofocus="">
+        <label for="price" class="sr-only">Price in Hong Kong Dollars*</label>
+        <input type="number" name="price" class="form-control" placeholder="10" required="">
+        <label for="lendtime" class="sr-only">Lending time in hours*</label>
+        <input type="number" name="lendtime" class="form-control" placeholder="24" required="">
+        <label for="image" class="sr-only">Image Link</label>
+        <input type="url" name="image" class="form-control">
+        <br>
+        
+        <input id="lat" type="hidden" name="latitude" required="">
+        <input id="long" type="hidden" name="longitude" required="">
+        <br>
+        <br>
+        <button class="btn btn-lg btn-primary btn-block" id="submitter" type="submit" disabled>Lend</button>
+  </form>
+</div>
+
+{% endblock %}
